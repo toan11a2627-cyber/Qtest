@@ -1,0 +1,530 @@
+\documentclass[14pt,a4paper]{extarticle}
+\usepackage[utf8]{vietnam}
+\usepackage[top=1.4cm, bottom=1.8cm, left=1.2cm, right=1.5cm, footskip=0.9cm]{geometry}
+\usepackage{amsmath,amssymb}
+\def\hienthiloigiai{1} % Bật hiển thị lời giải
+
+\usepackage[dethi]{ex_test} % Chỉ hiển thị đề thi
+%\usepackage[loigiai]{ex_test} % Hiển thị lời giải
+\usepackage{tikz-3dplot,tkz-euclide,tkz-tab,tabvar,pgfplots,esvect}
+\pgfplotsset{compat=1.18}
+\usepackage[hidelinks,unicode]{hyperref}
+
+\usetikzlibrary{shapes.geometric,shadings,calc,snakes,patterns,arrows,intersections,angles,backgrounds,quotes}
+\def\vec{\vv}\def\vt{\vv}\def\overrightarrow{\vv}
+
+%---------- Khai báo viết tắt, in đáp án
+\newcommand{\hoac}[1]{ %hệ hoặc
+    \left[\begin{aligned}#1\end{aligned}\right.}
+\newcommand{\heva}[1]{ %hệ và
+    \left\{\begin{aligned}#1\end{aligned}\right.}
+
+\def\tenSo{SỞ GD \& ĐT LÂM ĐỒNG}
+\def\tenTruon{TRƯỜNG THPT}
+\def\tenTruong{HUỲN\underline{H THÚC KHÁNG - SƠ}N MỸ}
+\def\tenTo{TỔ TỰ NHIÊN}
+\def\tenBaiKT{ĐỀ KIỂM TRA GIỮA HỌC KÌ 1}
+\def\tenNam{NĂM HỌC: 2026 - 2027}
+\def\tenMon{TOÁN 12}
+\def\Time{90}
+\def\made{101}
+\linespread{0.9}
+
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrulewidth}{0pt}
+\lfoot{\textit{Mã đề: \made}}
+\rfoot{Trang \thepage\ / \pageref{LastPage}}
+
+\begin{document}
+\noindent\begin{minipage}[t]{9.2cm}\centering
+		\fontsize{13.5}{18.0pt}\selectfont
+		\textbf{\textnormal{\tenSo}}\\
+		\fontsize{13.5}{18pt}\selectfont
+		\textbf{\tenTruon}\\
+		\textbf{\tenTruong}\\
+		\textbf{\tenTo}\\
+		\fontsize{13.5}{18pt}\selectfont
+		\vspace*{2mm}(\textit{Đề thi có \pageref{LastPage}\ trang})
+	\end{minipage}\hspace{0.1cm}
+	\begin{minipage}[t]{9.8cm}\centering
+		\fontsize{13.5}{18pt}\selectfont
+		\textbf{\tenBaiKT}\\
+		\fontsize{13.5}{18pt}\selectfont
+		\textbf{\tenNam}\\
+		\textbf{Môn thi: \tenMon}\\
+		\fontsize{13.5}{18pt}\selectfont\it
+		Thời \underline{gian làm bài: \Time} phút\\
+		\setlength\fboxsep{3pt}\vspace*{2mm}\fbox{\bf Mã đề: \made}
+	\end{minipage}\vspace{0.3cm}\\
+	\begin{minipage}[c]{15cm}\vspace{0.2cm}
+		\fontsize{13}{18pt}\selectfont
+		Họ và tên thí sinh{: \scriptsize\dotfill\!\dotfill}
+		Số báo danh{: \scriptsize\dotfill}
+	\end{minipage}
+
+\hrule
+\vspace{0.3cm}
+
+\noindent\textbf{\large PHẦN I. Câu trắc nghiệm nhiều phương án lựa chọn.} Thí sinh trả lời từ câu 1 đến câu 12. Mỗi câu hỏi thí sinh chỉ chọn một phương án.
+
+\begin{ex}
+    Cho hàm số $y = f(x)$ có bảng biến thiên như sau:
+    \begin{center}
+    \begin{tikzpicture}
+    \tkzTabInit[lgt=1.2,espcl=2.2,deltacl=0.6]{$x$/0.8,$y'$/0.8,$y$/2}{$-\infty$,$0$,$2$,$+\infty$}
+    \tkzTabLine{,+,0,-,0,+,}
+    \tkzTabVar{-/$-\infty$,+/$2$,-/$-2$,+/$+\infty$}
+    \end{tikzpicture}
+    \end{center}
+    Hàm số đã cho đồng biến trên khoảng nào dưới đây?
+    \choice
+    {$(0; 2)$}
+    {\True $(2; +\infty)$}
+    {$(0; +\infty)$}
+    {$(-\infty; 2)$}
+    \loigiai{
+        Dựa vào bảng biến thiên, ta thấy $y' > 0$ trên các khoảng $(-\infty; 0)$ và $(2; +\infty)$. Do đó hàm số đồng biến trên các khoảng $(-\infty; 0)$ và $(2; +\infty)$.
+    }
+\end{ex}
+
+\begin{ex}
+    Hàm số nào dưới đây đồng biến trên từng khoảng xác định của nó?
+    \choice
+    {$y = \dfrac{x+2}{x-1}$}
+    {\True $y = \dfrac{2x-1}{x+1}$}
+    {$y = \dfrac{-x+1}{x+2}$}
+    {$y = \dfrac{x-3}{2x-6}$}
+    \loigiai{
+        Xét hàm số $y = \dfrac{2x-1}{x+1}$, ta có $y' = \dfrac{2(1) - (-1)(1)}{(x+1)^2} = \dfrac{3}{(x+1)^2} > 0, \forall x \ne -1$. Do đó hàm số đồng biến trên từng khoảng xác định.
+    }
+\end{ex}
+
+\begin{ex}
+    Cho hàm số $y = f(x)$ có đồ thị như hình vẽ bên dưới:
+    \begin{center}
+    \begin{tikzpicture}[scale=0.8,>=stealth]
+        \draw[->] (-2.5,0) -- (3,0) node[below] {$x$};
+        \draw[->] (0,-2.8) -- (0,2.5) node[left] {$y$};
+        \node at (0,0) [below left] {$O$};
+        \draw[dashed] (-1,0) node[below] {$-1$} -- (-1,2) -- (0,2) node[right] {$2$};
+        \draw[dashed] (1,0) node[above] {$1$} -- (1,-2) -- (0,-2) node[left] {$-2$};
+        \draw[thick,blue,smooth,samples=100,domain=-2.1:2.1] plot (\x, {(\x)^3 - 3*(\x)});
+    \end{tikzpicture}
+    \end{center}
+    Điểm cực tiểu của đồ thị hàm số đã cho có tọa độ là
+    \choice
+    {$(-1; 2)$}
+    {\True $(1; -2)$}
+    {$x = 1$}
+    {$y = -2$}
+    \loigiai{
+        Dựa vào đồ thị, điểm thấp nhất trong lân cận là $(1; -2)$. Vậy điểm cực tiểu của đồ thị hàm số là $(1; -2)$.
+    }
+\end{ex}
+
+\begin{ex}
+    Giá trị lớn nhất của hàm số $f(x) = x^4 - 2x^2 + 3$ trên đoạn $[0; 2]$ bằng
+    \choice
+    {$3$}
+    {$2$}
+    {\True $11$}
+    {$5$}
+    \loigiai{
+        Ta có $f'(x) = 4x^3 - 4x = 4x(x^2 - 1)$.\\
+        Cho $f'(x) = 0 \iff x = 0 \in [0; 2]$ hoặc $x = 1 \in [0; 2]$ hoặc $x = -1 \notin [0; 2]$.\\
+        Tính các giá trị: $f(0) = 3$, $f(1) = 2$, $f(2) = 16 - 8 + 3 = 11$.\\
+        Vậy giá trị lớn nhất của hàm số trên đoạn $[0; 2]$ là $11$.
+    }
+\end{ex}
+
+\begin{ex}
+    Cho hàm số $y = f(x)$ xác định và liên tục trên đoạn $[-2; 3]$ có đồ thị như hình vẽ:
+    \begin{center}
+    \begin{tikzpicture}[scale=0.85,>=stealth]
+        \draw[->] (-3,0) -- (4,0) node[below] {$x$};
+        \draw[->] (0,-2.5) -- (0,4.5) node[left] {$y$};
+        \node at (0,0) [below left] {$O$};
+        \draw[dotted] (-2,0) node[below] {$-2$} -- (-2,1) -- (0,1) node[right] {$1$};
+        \draw[dotted] (-1,0) node[below] {$-1$} -- (-1,3) -- (0,3) node[left] {$3$};
+        \draw[dotted] (1,0) node[above] {$1$} -- (1,-2) -- (0,-2) node[left] {$-2$};
+        \draw[dotted] (3,0) node[below] {$3$} -- (3,4) -- (0,4) node[left] {$4$};
+        \draw[thick,red,smooth] (-2,1) to[out=60,in=180] (-1,3) to[out=0,in=150] (1,-2) to[out=-30,in=-110] (3,4);
+    \end{tikzpicture}
+    \end{center}
+    Giá trị nhỏ nhất của hàm số trên đoạn $[-2; 3]$ bằng
+    \choice
+    {$1$}
+    {\True $-2$}
+    {$4$}
+    {$-1$}
+    \loigiai{
+        Dựa vào đồ thị, điểm thấp nhất của đồ thị trên đoạn $[-2; 3]$ có tung độ bằng $-2$ (tại $x = 1$). Vậy $\min_{[-2; 3]} f(x) = -2$.
+    }
+\end{ex}
+
+\begin{ex}
+    Cho hàm số $y = f(x)$ có $\lim\limits_{x \to +\infty} f(x) = 2$, $\lim\limits_{x \to -\infty} f(x) = -2$ và $\lim\limits_{x \to 1^+} f(x) = +\infty$. Tổng số đường tiệm cận ngang và tiệm cận đứng của đồ thị hàm số là
+    \choice
+    {$2$}
+    {\True $3$}
+    {$1$}
+    {$4$}
+    \loigiai{
+        - Vì $\lim\limits_{x \to +\infty} f(x) = 2$ nên đường thẳng $y = 2$ là một tiệm cận ngang.\\
+        - Vì $\lim\limits_{x \to -\infty} f(x) = -2$ nên đường thẳng $y = -2$ là một tiệm cận ngang nữa.\\
+        - Vì $\lim\limits_{x \to 1^+} f(x) = +\infty$ nên đường thẳng $x = 1$ là một tiệm cận đứng.\\
+        Vậy tổng số đường tiệm cận đứng và tiệm cận ngang là $3$.
+    }
+\end{ex}
+
+\begin{ex}
+    Phương trình đường tiệm cận đứng của đồ thị hàm số $y = \dfrac{2x+1}{x-3}$ là
+    \choice
+    {$y = 2$}
+    {$x = -3$}
+    {\True $x = 3$}
+    {$y = 3$}
+    \loigiai{
+        Ta có $\lim\limits_{x \to 3^+} \dfrac{2x+1}{x-3} = +\infty$ nên đường tiệm cận đứng là $x = 3$.
+    }
+\end{ex}
+
+\begin{ex}
+    Đường cong trong hình vẽ bên dưới là đồ thị của hàm số nào?
+    \begin{center}
+    \begin{tikzpicture}[scale=0.75,>=stealth]
+        \draw[->] (-5,0) -- (3,0) node[below] {$x$};
+        \draw[->] (0,-3) -- (0,6) node[left] {$y$};
+        \node at (0,0) [below left] {$O$};
+        \draw[dashed,thick,red] (-1,-3) -- (-1,6);
+        \draw[dashed,thick,red] (-5,2) -- (3,2);
+        \node at (-1,0) [below left] {$-1$};
+        \node at (0,2) [above right] {$2$};
+        \draw[thick,blue,smooth,samples=100,domain=-5:-1.7] plot (\x, {(2*\x-1)/(\x+1)});
+        \draw[thick,blue,smooth,samples=100,domain=-0.4:3] plot (\x, {(2*\x-1)/(\x+1)});
+    \end{tikzpicture}
+    \end{center}
+    \choice
+    {$y = \dfrac{x-2}{x+1}$}
+    {\True $y = \dfrac{2x-1}{x+1}$}
+    {$y = \dfrac{2x+3}{x-1}$}
+    {$y = \dfrac{x+2}{x-1}$}
+    \loigiai{
+        Đồ thị hàm số có tiệm cận đứng $x = -1$ và tiệm cận ngang $y = 2$. Đồ thị đi qua điểm $(0; -1)$. Trong các đáp án đã cho, chỉ có hàm số $y = \dfrac{2x-1}{x+1}$ thỏa mãn.
+    }
+\end{ex}
+
+\begin{ex}
+    Cho hàm số $y = f(x)$ xác định trên $\mathbb{R}$ và có bảng xét dấu của đạo hàm $f'(x)$ như sau:
+    \begin{center}
+    \begin{tikzpicture}
+    \tkzTabInit[lgt=1.2,espcl=2,deltacl=0.6]{$x$/0.8,$f'(x)$/0.8}{$-\infty$,$-2$,$0$,$1$,$+\infty$}
+    \tkzTabLine{,-,0,+,0,-,0,+,}
+    \end{tikzpicture}
+    \end{center}
+    Hàm số $y = f(x)$ có bao nhiêu điểm cực trị?
+    \choice
+    {$1$}
+    {$2$}
+    {\True $3$}
+    {$4$}
+    \loigiai{
+        Đạo hàm $f'(x)$ đổi dấu khi qua 3 điểm $x = -2$, $x = 0$ và $x = 1$. Do đó hàm số có 3 điểm cực trị.
+    }
+\end{ex}
+
+\begin{ex}
+    Cho hàm số $y = f(x) = \dfrac{x^2+x+1}{x+1}$ có bảng biến thiên như sau:
+    \begin{center}
+    \begin{tikzpicture}
+    \tkzTabInit[lgt=1.2,espcl=2.2,deltacl=0.6]{$x$/0.8,$y'$/0.8,$y$/2}{$-\infty$,$-2$,$-1$,$0$,$+\infty$}
+    \tkzTabLine{,+,0,-,d,-,0,+,}
+    \tkzTabVar{-/$-\infty$,+/$-3$,-D+/$-\infty$/$+\infty$,-/$1$,+/$+\infty$}
+    \end{tikzpicture}
+    \end{center}
+    Giá trị cực đại của hàm số đã cho bằng
+    \choice
+    {$-2$}
+    {\True $-3$}
+    {$1$}
+    {$0$}
+    \loigiai{
+        Từ bảng biến thiên, tại điểm $x = -2$ hàm số đạt cực đại và giá trị cực đại tương ứng là $y_{\text{CĐ}} = -3$.
+    }
+\end{ex}
+
+\begin{ex}
+    Tiệm cận xiên của đồ thị hàm số $y = \dfrac{x^2+2x-3}{x+1}$ là đường thẳng
+    \choice
+    {$y = x+2$}
+    {\True $y = x+1$}
+    {$y = x$}
+    {$y = -x+1$}
+    \loigiai{
+        Ta có $y = \dfrac{x^2+2x-3}{x+1} = \dfrac{x(x+1) + 1(x+1) - 4}{x+1} = x + 1 - \dfrac{4}{x+1}$.\\
+        Vì $\lim\limits_{x \to \pm\infty} \left[ y - (x+1) \right] = \lim\limits_{x \to \pm\infty} \dfrac{-4}{x+1} = 0$, nên đường thẳng $y = x+1$ là tiệm cận xiên của đồ thị hàm số.
+    }
+\end{ex}
+
+\begin{ex}
+    Cho hàm số bậc ba $y = ax^3 + bx^2 + cx + d$ có đồ thị là đường cong như hình vẽ bên:
+    \begin{center}
+    \begin{tikzpicture}[scale=0.8,>=stealth]
+        \draw[->] (-2.5,0) -- (3,0) node[below] {$x$};
+        \draw[->] (0,-1.5) -- (0,3.5) node[left] {$y$};
+        \node at (0,0) [below left] {$O$};
+        \draw[thick,blue,smooth,samples=100,domain=-2.1:2.3] plot (\x, {0.6*(\x)^3 - 1.8*(\x) + 1});
+        \filldraw (0,1) circle (1.5pt) node[left] {$d$};
+    \end{tikzpicture}
+    \end{center}
+    Khẳng định nào sau đây về dấu của các hệ số là đúng?
+    \choice
+    {\True $a > 0, d > 0$}
+    {$a < 0, d > 0$}
+    {$a > 0, d < 0$}
+    {$a < 0, d < 0$}
+    \loigiai{
+        Nhánh bên phải của đồ thị đi lên khi $x \to +\infty$, do đó $a > 0$.\\
+        Đồ thị cắt trục tung tại điểm $(0; d)$ nằm phía trên trục hoành nên $d > 0$.
+    }
+\end{ex}
+\begin{ex}
+    Điểm kiểm tra của 50 học sinh được ghi lại ở bảng ghép nhóm sau:
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            Điểm số & $[5; 6)$ & $[6; 7)$ & $[7; 8)$ & $[8; 9)$ \\
+            \hline
+            Số học sinh & $10$ & $15$ & $18$ & $7$ \\
+            \hline
+        \end{tabular}
+    \end{center}
+    Nhóm có tần số lớn nhất là
+    \choice
+    {$[5; 6)$}
+    {$[6; 7)$}
+    {\True $[7; 8)$}
+    {$[8; 9)$}
+    \loigiai{
+        Nhìn vào bảng, nhóm $[7; 8)$ có tần số lớn nhất bằng $18$.
+    }
+\end{ex}
+
+\begin{ex}
+    Với mẫu số liệu điểm kiểm tra của 50 học sinh ở câu trên:
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            Điểm số & $[5; 6)$ & $[6; 7)$ & $[7; 8)$ & $[8; 9)$ \\
+            \hline
+            Số học sinh & $10$ & $15$ & $18$ & $7$ \\
+            \hline
+        \end{tabular}
+    \end{center}
+    Nhóm chứa tứ phân vị thứ nhất $Q_1$ là nhóm nào?
+    \choice
+    {$[5; 6)$}
+    {\True $[6; 7)$}
+    {$[7; 8)$}
+    {$[8; 9)$}
+    \loigiai{
+        Ta có $\dfrac{n}{4} = \dfrac{50}{4} = 12{,}5$.
+        Tần số tích lũy: nhóm 1 có $cf_1 = 10 < 12{,}5 \le cf_2 = 25$.
+        Do đó nhóm chứa tứ phân vị thứ nhất $Q_1$ là $[6; 7)$.
+    }
+\end{ex}
+
+\noindent\textbf{\large PHẦN II. Câu trắc nghiệm đúng sai.} Thí sinh trả lời từ câu 1 đến câu 2. Trong mỗi ý \textbf{a)}, \textbf{b)}, \textbf{c)}, \textbf{d)} ở mỗi câu, thí sinh chọn đúng hoặc sai.
+
+\begin{ex}
+    Cho hàm số $y = f(x) = \dfrac{x^2+2x+2}{x+1}$ có đồ thị $(C)$.
+
+    \choiceTFt
+    {\True Hàm số đồng biến trên các khoảng $(-\infty; -2)$ và $(0; +\infty)$}
+    {\True Điểm cực đại của đồ thị hàm số là $(-2; -2)$}
+    {\True Đường thẳng $y = x+1$ là tiệm cận xiên của đồ thị $(C)$}
+    {Giá trị nhỏ nhất của hàm số trên đoạn $[0; 2]$ bằng $\dfrac{5}{2}$}
+    \loigiai{
+        \begin{itemchoice}
+            \itemch Đúng. Ta có $y' = \dfrac{(2x+2)(x+1) - (x^2+2x+2)}{(x+1)^2} = \dfrac{x^2+2x}{(x+1)^2}$. Cho $y' = 0 \iff x = 0$ hoặc $x = -2$. Dấu của $y'$ dương trên $(-\infty; -2)$ và $(0; +\infty)$ nên hàm số đồng biến trên các khoảng này.
+            \itemch Đúng. Tại $x = -2$, hàm số đạt cực đại với $y(-2) = \dfrac{4-4+2}{-1} = -2$, nên điểm cực đại của đồ thị là $(-2; -2)$.
+            \itemch Đúng. Ta viết $y = x + 1 + \dfrac{1}{x+1}$. Khi $x \to \pm\infty$ thì $\dfrac{1}{x+1} \to 0$, do đó $y = x+1$ là tiệm cận xiên.
+            \itemch Sai. Với $x \in [0; 2]$, hàm số đồng biến nên $\min\limits_{[0; 2]} f(x) = f(0) = 2 \ne \dfrac{5}{2}$.
+        \end{itemchoice}
+    }
+\end{ex}
+
+\begin{ex}
+    Cho hàm số bậc ba $y = f(x) = x^3 - 3x^2 + 2$ có đồ thị $(C)$ như hình vẽ:
+    \begin{center}
+    \begin{tikzpicture}[scale=0.85,>=stealth]
+        \draw[->] (-1.5,0) -- (3.5,0) node[below] {$x$};
+        \draw[->] (0,-3) -- (0,3.5) node[left] {$y$};
+        \node at (0,0) [below left] {$O$};
+        \draw[dashed] (2,0) node[above] {$2$} -- (2,-2) -- (0,-2) node[left] {$-2$};
+        \node at (0,2) [left] {$2$};
+        \draw[thick,blue,smooth,samples=100,domain=-1.1:3.1] plot (\x, {(\x)^3 - 3*(\x)^2 + 2});
+    \end{tikzpicture}
+    \end{center}
+    \choiceTFt
+    {\True Hàm số nghịch biến trên khoảng $(0; 2)$}
+    {Điểm cực đại của đồ thị hàm số là $x = 0$}
+    {\True Giá trị lớn nhất của hàm số trên đoạn $[0; 3]$ bằng $2$}
+    {\True Phương trình $f(x) = m$ có 3 nghiệm thực phân biệt khi $-2 < m < 2$}
+    \loigiai{
+        \begin{itemchoice}
+            \itemch Đúng. Ta có $f'(x) = 3x^2 - 6x < 0, \forall x \in (0; 2)$, do đó hàm số nghịch biến trên $(0; 2)$.
+            \itemch Sai. Điểm cực đại của \textit{đồ thị} hàm số là một điểm trong mặt phẳng tọa độ: $(0; 2)$, còn $x = 0$ là điểm cực đại của hàm số.
+            \itemch Đúng. Ta có $f(0) = 2, f(2) = -2, f(3) = 27 - 27 + 2 = 2$. Do đó $\max\limits_{[0; 3]} f(x) = 2$.
+            \itemch Đúng. Số nghiệm của phương trình $f(x) = m$ là số giao điểm của đồ thị $(C)$ với đường thẳng nằm ngang $y = m$. Dựa vào đồ thị, đường thẳng $y = m$ cắt đồ thị tại 3 điểm phân biệt khi $-2 < m < 2$.
+        \end{itemchoice}
+    }
+\end{ex}
+
+\noindent\textbf{\large PHẦN III. Câu trắc nghiệm trả lời ngắn.} Thí sinh trả lời từ câu 1 đến câu 4.
+
+\begin{ex}
+    Tìm tham số $m > 0$ để giá trị lớn nhất của hàm số $y = \dfrac{x+m}{x-1}$ trên đoạn $[2; 4]$ bằng $5$.
+    \shortans{3}
+    \loigiai{
+        Tập xác định $D = \mathbb{R} \setminus \{1\}$. Đoạn $[2; 4] \subset D$.\\
+        Ta có $y' = \dfrac{-1-m}{(x-1)^2}$. Vì $m > 0$ nên $-1-m < 0$, suy ra $y' < 0$ với mọi $x \in [2; 4]$.\\
+        Hàm số nghịch biến trên đoạn $[2; 4]$, do đó $\max\limits_{[2; 4]} y = y(2) = \dfrac{2+m}{2-1} = 2 + m$.\\
+        Theo giả thiết $2 + m = 5 \iff m = 3$ (thỏa mãn $m > 0$).
+    }
+\end{ex}
+
+\begin{ex}
+    Cho hàm số $y = x^3 - 3x^2 + 4$. Đồ thị hàm số có tâm đối xứng là điểm $I(a; b)$. Tính giá trị của biểu thức $T = 3a - b$.
+    \shortans{1}
+    \loigiai{
+        Ta có $y' = 3x^2 - 6x$, $y'' = 6x - 6$.\\
+        Cho $y'' = 0 \iff 6x - 6 = 0 \iff x = 1$.\\
+        Với $x = 1 \implies y = 1^3 - 3(1)^2 + 4 = 2$.\\
+        Vậy đồ thị hàm số nhận điểm uốn $I(1; 2)$ làm tâm đối xứng, tức $a = 1, b = 2$.\\
+        Giá trị biểu thức $T = 3a - b = 3(1) - 2 = 1$.
+    }
+\end{ex}
+
+\begin{ex}
+    Cho hàm số bậc ba $f(x) = ax^3 + bx^2 + cx + d$ có đồ thị như hình vẽ bên:
+    \begin{center}
+    \begin{tikzpicture}[scale=0.8,>=stealth]
+        \draw[->] (-1.5,0) -- (3.5,0) node[below] {$x$};
+        \draw[->] (0,-2) -- (0,4.5) node[left] {$y$};
+        \node at (0,0) [below left] {$O$};
+        \draw[dashed] (2,0) node[above] {$2$} -- (2,-1) -- (0,-1) node[left] {$-1$};
+        \node at (0,3) [left] {$3$};
+        \draw[thick,blue,smooth,samples=100,domain=-1.1:3.1] plot (\x, {(\x)^3 - 3*(\x)^2 + 3});
+    \end{tikzpicture}
+    \end{center}
+    Giá trị của $f(3)$ bằng bao nhiêu?
+    \shortans{3}
+    \loigiai{
+        Đồ thị có điểm cực đại $(0; 3)$ và điểm cực tiểu $(2; -1)$.\\
+        - Đồ thị qua $(0; 3) \implies d = 3$.\\
+        - Đạo hàm $f'(x) = 3ax^2 + 2bx + c$ có hai nghiệm là $0$ và $2 \implies c = 0$ và $-\dfrac{2b}{3a} = 2 \implies b = -3a$.\\
+        - Đồ thị qua $(2; -1) \implies a(2)^3 + b(2)^2 + 3 = -1 \iff 8a + 4(-3a) + 3 = -1 \iff -4a = -4 \iff a = 1 \implies b = -3$.\\
+        Vậy hàm số là $f(x) = x^3 - 3x^2 + 3$. Do đó $f(3) = 3^3 - 3(3)^2 + 3 = 3$.
+    }
+\end{ex}
+
+\begin{ex}
+    Một vật chuyển động thẳng xác định bởi phương trình $s(t) = -t^3 + 6t^2 + 9t$ với $t$ tính bằng giây ($t \ge 0$) và $s$ tính bằng mét. Vận tốc lớn nhất của chuyển động trong khoảng thời gian từ $t = 0$ đến $t = 5$ bằng bao nhiêu m/s?
+    \shortans{21}
+    \loigiai{
+        Vận tốc tức thời của vật là đạo hàm của quãng đường: $v(t) = s'(t) = -3t^2 + 12t + 9$.\\
+        Ta có $v'(t) = -6t + 12 = 0 \iff t = 2 \in [0; 5]$.\\
+        Tính giá trị: $v(0) = 9$, $v(2) = -3(4) + 12(2) + 9 = 21$, $v(5) = -3(25) + 12(5) + 9 = -6$.\\
+        Vậy vận tốc lớn nhất đạt được bằng $21$ m/s tại thời điểm $t = 2$ giây.
+    }
+\end{ex}
+
+\noindent\textbf{\large PHẦN IV. Câu hỏi tự luận.} Thí sinh trình bày lời giải vào giấy làm bài.
+
+\begin{ex}
+    Khảo sát sự biến thiên và lập bảng biến thiên của hàm số $y = -x^3 + 3x^2 - 4$.
+    \loigiai{
+        1. Tập xác định: $D = \mathbb{R}$.\\
+        2. Sự biến thiên:\\
+        - Chiều biến thiên: Ta có $y' = -3x^2 + 6x = -3x(x - 2)$.\\
+        Cho $y' = 0 \iff \hoac{x = 0 \\ x = 2}$.\\
+        - Dấu của đạo hàm:\\
+        + $y' > 0 \iff x \in (0; 2)$ nên hàm số đồng biến trên khoảng $(0; 2)$.\\
+        + $y' < 0 \iff x \in (-\infty; 0)$ hoặc $x \in (2; +\infty)$ nên hàm số nghịch biến trên từng khoảng $(-\infty; 0)$ và $(2; +\infty)$.\\
+        - Cực trị: Hàm số đạt cực tiểu tại $x = 0$, giá trị cực tiểu $y_{\text{CT}} = -4$; hàm số đạt cực đại tại $x = 2$, giá trị cực đại $y_{\text{CĐ}} = 0$.\\
+        - Giới hạn tại vô cực: $\lim\limits_{x \to -\infty} y = +\infty$ và $\lim\limits_{x \to +\infty} y = -\infty$.\\
+        - Bảng biến thiên:
+        \begin{center}
+        \begin{tikzpicture}
+        \tkzTabInit[lgt=1.2,espcl=2.2,deltacl=0.6]{$x$/0.8,$y'$/0.8,$y$/2}{$-\infty$,$0$,$2$,$+\infty$}
+        \tkzTabLine{,-,0,+,0,-,}
+        \tkzTabVar{+/$+\infty$,-/$-4$,+/$0$,-/$-\infty$}
+        \end{tikzpicture}
+        \end{center}
+    }
+\end{ex}
+
+\begin{ex}
+    Tìm giá trị lớn nhất và giá trị nhỏ nhất của hàm số $y = \sqrt{4-x^2} + x$ trên đoạn $[-2; 2]$.
+    \loigiai{
+        Hàm số xác định và liên tục trên đoạn $[-2; 2]$.\\
+        Với $x \in (-2; 2)$, đạo hàm:
+        \[ y' = \dfrac{-2x}{2\sqrt{4-x^2}} + 1 = 1 - \dfrac{x}{\sqrt{4-x^2}} = \dfrac{\sqrt{4-x^2} - x}{\sqrt{4-x^2}} \]
+        Cho $y' = 0 \iff \sqrt{4-x^2} = x \iff \heva{x \ge 0 \\ 4-x^2 = x^2} \iff \heva{x \ge 0 \\ 2x^2 = 4} \iff x = \sqrt{2} \in (-2; 2)$.\\
+        Tính các giá trị tại các điểm đầu mút và điểm dừng:
+        \[ y(-2) = \sqrt{4 - (-2)^2} + (-2) = -2 \]
+        \[ y(2) = \sqrt{4 - 2^2} + 2 = 2 \]
+        \[ y(\sqrt{2}) = \sqrt{4 - (\sqrt{2})^2} + \sqrt{2} = \sqrt{2} + \sqrt{2} = 2\sqrt{2} \]
+        So sánh các giá trị trên, ta có:
+        \[ \max_{[-2; 2]} y = 2\sqrt{2} \quad \text{tại } x = \sqrt{2} \]
+        \[ \min_{[-2; 2]} y = -2 \quad \text{tại } x = -2 \]
+    }
+\end{ex}
+
+\begin{ex}
+    Một công ty sản xuất đồ hộp cần thiết kế một chiếc hộp quà hình trụ không có nắp bằng vật liệu mạ thiếc có thể tích $V = 16\pi\text{ dm}^3$. Hãy tìm bán kính đáy $R$ (đơn vị: dm) của hình trụ để diện tích toàn phần không nắp của chiếc hộp là nhỏ nhất (nhằm tiết kiệm chi phí vật liệu nhất).
+    \begin{center}
+    \begin{tikzpicture}[scale=0.9,>=stealth]
+        % Hình trụ minh họa
+        \draw[thick] (0,0) ellipse (2cm and 0.6cm);
+        \draw[thick] (-2,0) -- (-2,3);
+        \draw[thick] (2,0) -- (2,3);
+        \draw[thick] (0,3) ellipse (2cm and 0.6cm);
+        \draw[dashed] (0,0) -- (2,0) node[midway,below] {$R$};
+        \draw[dashed] (0,0) -- (0,3) node[midway,left] {$h$};
+        \filldraw (0,0) circle (1.5pt) node[below] {$O$};
+        \filldraw (0,3) circle (1.5pt) node[above] {$O'$};
+        \node at (0,1.5) [right] {$V = 16\pi\text{ dm}^3$};
+    \end{tikzpicture}
+    \end{center}
+    \loigiai{
+        Gọi $R$ là bán kính đáy ($R > 0$) và $h$ là chiều cao của hình trụ ($h > 0$).\\
+        Thể tích của khối trụ là: $V = \pi R^2 h = 16\pi \implies h = \dfrac{16}{R^2}$.\\
+        Diện tích vật liệu để làm chiếc hộp không có nắp gồm diện tích đáy và diện tích xung quanh:
+        \[ S(R) = \pi R^2 + 2\pi R h = \pi R^2 + 2\pi R \cdot \dfrac{16}{R^2} = \pi \left( R^2 + \dfrac{32}{R} \right) \]
+        Xét hàm số $f(R) = R^2 + \dfrac{32}{R}$ với $R \in (0; +\infty)$.\\
+        Đạo hàm:
+        \[ f'(R) = 2R - \dfrac{32}{R^2} = \dfrac{2(R^3 - 16)}{R^2} \]
+        (Cách khác dùng BĐT Cô-si cho 3 số dương):
+        \[ R^2 + \dfrac{32}{R} = R^2 + \dfrac{16}{R} + \dfrac{16}{R} \ge 3\sqrt[3]{R^2 \cdot \dfrac{16}{R} \cdot \dfrac{16}{R}} = 3\sqrt[3]{256} = 12\sqrt[3]{4} \]
+        Dấu ``='' xảy ra khi $R^2 = \dfrac{16}{R} \iff R^3 = 16 \iff R = \sqrt[3]{16} = 2\sqrt[3]{2}\text{ dm}$.\\
+        Hoặc giải $f'(R) = 0 \iff R^3 = 16 \iff R = 2\sqrt[3]{2}$ dm.\\
+        Lập bảng biến thiên của $f(R)$ trên $(0; +\infty)$:
+        \begin{center}
+        \begin{tikzpicture}
+        \tkzTabInit[lgt=1.2,espcl=2.5,deltacl=0.6]{$R$/0.8,$f'(R)$/0.8,$f(R)$/2}{$0$,$2\sqrt[3]{2}$,$+\infty$}
+        \tkzTabLine{d,-,0,+,}
+        \tkzTabVar{D+/$+\infty$,-/$12\sqrt[3]{4}$,+/$+\infty$}
+        \end{tikzpicture}
+        \end{center}
+        Vậy diện tích toàn phần không nắp nhỏ nhất khi bán kính đáy bằng $R = 2\sqrt[3]{2}\text{ dm}$.
+    }
+\end{ex}
+\begin{center}-----HẾT-----\end{center}
+\end{document}

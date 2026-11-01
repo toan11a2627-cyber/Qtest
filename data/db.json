@@ -1,0 +1,52 @@
+{
+  "exams": [],
+  "classes": [
+    {
+      "id": "class_12a1",
+      "name": "Toán 12A1 - Chuyên Đề TN THPT",
+      "code": "C12A1",
+      "updatedAt": "1/11/2026",
+      "students": [
+        {
+          "stt": 1,
+          "name": "Nguyễn Văn An",
+          "pin": "101"
+        },
+        {
+          "stt": 2,
+          "name": "Trần Thị Bình",
+          "pin": "102"
+        },
+        {
+          "stt": 3,
+          "name": "Lê Hoàng Cường",
+          "pin": "103"
+        },
+        {
+          "stt": 4,
+          "name": "Phạm Minh Đức",
+          "pin": "104"
+        },
+        {
+          "stt": 5,
+          "name": "Vũ Thị Hoa",
+          "pin": "105"
+        }
+      ],
+      "lectures": [
+        {
+          "id": "lec_1",
+          "title": "Chuyên đề 1: Khảo sát và Vẽ đồ thị Hàm số",
+          "type": "link",
+          "url": "https://youtube.com",
+          "date": "2026-10-25"
+        }
+      ],
+      "practices": [],
+      "assignedExams": []
+    }
+  ],
+  "submissions": [],
+  "reports": [],
+  "lastUpdated": "2026-11-01T16:04:21.811Z"
+}

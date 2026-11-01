@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase - Tự động xác thực ngầm & Ghi dữ liệu</title>
+</head>
+<body style="font-family: Arial, sans-serif; max-width: 600px; margin: 30px auto; padding: 20px; line-height: 1.5;">
+    <h2>Firebase - Ghi dữ liệu</h2>
+    <p style="font-size: 13px; color: #555;">Hệ thống tự động xác thực ngầm bằng Anonymous Auth hoặc Tài khoản hệ thống (không cần nhập tài khoản).</p>
+    
+    <p id="trangthai" style="color: #0d6efd; font-weight: bold; background: #e7f1ff; padding: 10px 14px; border-radius: 6px; border: 1px solid #b6d4fe;">
+        Đang tự động xác thực ngầm...
+    </p>
+
+    <!-- Khu vực ghi dữ liệu: Luôn hiển thị sẵn sàng, không cần giao diện đăng nhập -->
+    <div id="khuVucGhiDuLieu" style="background: #f0fdf4; padding: 20px; border-radius: 8px; border: 1px solid #bbf7d0;">
+        <h3 style="color: #166534; margin-top: 0;">Nhập thông tin để lưu lên Firebase:</h3>
+        <label style="font-weight: bold; font-size: 13px; display: block; margin-bottom: 5px;">Họ và Tên:</label>
+        <input type="text" id="hoten" placeholder="Nhập Họ Tên..." style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 6px; margin-bottom: 15px;"><br>
+        
+        <label style="font-weight: bold; font-size: 13px; display: block; margin-bottom: 5px;">Số điện thoại:</label>
+        <input type="text" id="sdt" placeholder="Nhập Số điện thoại..." style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 6px; margin-bottom: 18px;"><br>
+        
+        <button id="btnGhiDuLieu" style="padding: 12px 24px; background: #16a34a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 15px; width: 100%;">Ghi Dữ Liệu Lên Firebase</button>
+    </div>
+
+    <div style="margin-top: 20px; font-size: 12px; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 15px; display: flex; justify-content: space-between;">
+        <span>Realtime Database: qtest-ac4d3</span>
+        <a href="/" style="color: #2563eb; text-decoration: none; font-weight: bold;">← Quay lại MathExam Pro</a>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js";
+        import { getAuth, signInAnonymously, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBmCAWoPosXEguXANoPzy17TkiLw1ve008",
+            authDomain: "qtest-ac4d3.firebaseapp.com",
+            databaseURL: "https://qtest-ac4d3-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "qtest-ac4d3",
+            storageBucket: "qtest-ac4d3.firebasestorage.app",
+            messagingSenderId: "412867160771",
+            appId: "1:412867160771:web:2e9885aa0141fc4cf95076"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const auth = getAuth(app);
+
+        let currentUserUid = null;
+
+        // 1. LẮNG NGHE TRẠNG THÁI TỰ ĐỘNG ĐĂNG NHẬP
+        onAuthStateChanged(auth, (user) => {
+            const statusEl = document.getElementById("trangthai");
+            if (user) {
+                currentUserUid = user.uid;
+                const authMethod = user.isAnonymous ? "Ẩn danh (Anonymous)" : (user.email || "Hệ thống");
+                statusEl.style.color = "#15803d";
+                statusEl.style.background = "#f0fdf4";
+                statusEl.style.borderColor = "#86efac";
+                statusEl.innerText = "✓ Đã tự động xác thực ngầm thành công: " + authMethod + " (UID: " + user.uid.substring(0, 8) + "...)";
+            } else {
+                currentUserUid = null;
+                // Nếu chưa có phiên đăng nhập, tiến hành tự động xác thực ngầm ngay lập tức
+                autoSilentAuth();
+            }
+        });
+
+        // 2. HÀM TỰ ĐỘNG XÁC THỰC NGẦM BẰNG CODE (Không cần form đăng nhập)
+        async function autoSilentAuth() {
+            const statusEl = document.getElementById("trangthai");
+            statusEl.innerText = "Đang tự động xác thực ngầm (Anonymous / System Account)...";
+
+            // Bước 1: Thử Đăng nhập ẩn danh (Anonymous Auth)
+            try {
+                const anonRes = await signInAnonymously(auth);
+                console.log("[Firebase] Tự động xác thực ẩn danh thành công:", anonRes.user.uid);
+                return;
+            } catch (err) {
+                console.log("[Firebase] Anonymous auth chưa kích hoạt hoặc lỗi, chuyển sang tài khoản hệ thống ngầm:", err.message);
+            }
+
+            // Bước 2: Tự động xác thực ngầm bằng tài khoản hệ thống cố định
+            try {
+                const credRes = await signInWithEmailAndPassword(auth, "test@example.com", "matkhau123");
+                console.log("[Firebase] Tự động xác thực tài khoản hệ thống thành công:", credRes.user.uid);
+            } catch (err) {
+                console.error("[Firebase] Lỗi xác thực ngầm:", err.message);
+                statusEl.style.color = "#b91c1c";
+                statusEl.style.background = "#fef2f2";
+                statusEl.style.borderColor = "#fecaca";
+                statusEl.innerText = "Chưa thể xác thực ngầm: " + err.message;
+            }
+        }
+
+        // Tự động chạy xác thực ngầm ngay khi tải trang
+        autoSilentAuth();
+
+        // 3. XỬ LÝ NÚT GHI DỮ LIỆU LÊN FIREBASE
+        document.getElementById("btnGhiDuLieu").addEventListener("click", async () => {
+            if (!currentUserUid) {
+                // Đảm bảo thử xác thực lại ngầm trước khi báo lỗi
+                await autoSilentAuth();
+                if (!currentUserUid) {
+                    return alert("Đang xác thực ngầm, vui lòng thử lại sau giây lát!");
+                }
+            }
+
+            const hoTen = document.getElementById("hoten").value.trim();
+            const sdt = document.getElementById("sdt").value.trim();
+
+            if (!hoTen) return alert("Vui lòng nhập Họ Tên!");
+            if (!sdt) return alert("Vui lòng nhập Số điện thoại!");
+            
+            try {
+                const dataRef = ref(database, 'users/' + currentUserUid);
+                await set(dataRef, {
+                    ho_ten: hoTen,
+                    so_dien_thoai: sdt,
+                    thoi_gian: new Date().toISOString()
+                });
+                alert("Đã lưu dữ liệu lên Firebase thành công!");
+            } catch (error) {
+                alert("Lỗi lưu dữ liệu: " + error.message);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+{
+  "name": "MathExam Pro - Hệ Thống Thi Trắc Nghiệm Toán Học",
+  "description": "Nền tảng thi trắc nghiệm Toán học trực tuyến, hỗ trợ biên dịch đề thi LaTeX với bảng biến thiên và đồ thị hàm số TikZ.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
