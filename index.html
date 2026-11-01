@@ -27,27 +27,38 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
 
-    <!-- Cấu hình Firebase mới (qtest-ac4d3) -->
+    <!-- Cấu hình Firebase mới (qtest11-3c48a) -->
     <script>
         const firebaseConfig = {
-          apiKey: "AIzaSyBmCAWoPosXEguXANoPzy17TkiLw1ve008",
-          authDomain: "qtest-ac4d3.firebaseapp.com",
-          databaseURL: "https://qtest-ac4d3-default-rtdb.asia-southeast1.firebasedatabase.app",
-          projectId: "qtest-ac4d3",
-          storageBucket: "qtest-ac4d3.firebasestorage.app",
-          messagingSenderId: "412867160771",
-          appId: "1:412867160771:web:2e9885aa0141fc4cf95076",
-          measurementId: "G-NVTSEKN248"
+          apiKey: "AIzaSyCbG59BO_ALM9zIhqslIcaZH6RuVefm3mo",
+          authDomain: "qtest11-3c48a.firebaseapp.com",
+          databaseURL: "https://qtest11-3c48a-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "qtest11-3c48a",
+          storageBucket: "qtest11-3c48a.firebasestorage.app",
+          messagingSenderId: "1001348645526",
+          appId: "1:1001348645526:web:42d986da12fcc9554cb8b7",
+          measurementId: "G-GKP3YNQE2E"
         };
         window.firebaseConfig = firebaseConfig;
 
         // Tự động khởi tạo Firebase trên client
         try {
-            if (window.firebase && !window.firebase.apps.length) {
-                window.firebaseApp = window.firebase.initializeApp(firebaseConfig);
-                window.firebaseDb = window.firebase.firestore();
-                window.firebaseRtdb = typeof window.firebase.database === 'function' ? window.firebase.database() : null;
-                console.log("[Firebase] Khởi tạo thành công Firebase qtest-ac4d3 trong index.html");
+            if (window.firebase) {
+                if (window.firebase.firestore && typeof window.firebase.firestore.setLogLevel === 'function') {
+                    try { window.firebase.firestore.setLogLevel('silent'); } catch(_) {}
+                }
+                if (!window.firebase.apps.length) {
+                    window.firebaseApp = window.firebase.initializeApp(firebaseConfig);
+                    if (typeof window.firebase.firestore === 'function') {
+                        try {
+                            const fsDb = window.firebase.firestore();
+                            fsDb.settings({ experimentalAutoDetectLongPolling: true, merge: true });
+                            window.firebaseDb = fsDb;
+                        } catch(_) {}
+                    }
+                    window.firebaseRtdb = typeof window.firebase.database === 'function' ? window.firebase.database() : null;
+                    console.log("[Firebase] Khởi tạo thành công Firebase qtest11-3c48a trong index.html");
+                }
             }
         } catch (e) {
             console.warn("[Firebase] Khởi tạo trong index.html:", e);
@@ -344,9 +355,9 @@
                         <p class="text-sm text-blue-600">Hỗ trợ đầy đủ định dạng LaTeX chuẩn (\choice, \choiceTF, \shortans, Tự luận, Điền khuyết), Bảng biến thiên (tkz-tab) và Đồ thị TikZ.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <button onclick="window.loadSampleDe01()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold shadow-sm hover:bg-emerald-700 flex items-center gap-1.5 transition" title="Nạp đề thi chuẩn de_01.tex (23 câu: Trắc nghiệm, Đúng/Sai, Trả lời ngắn, Tự luận)"><i class="fa-solid fa-file-lines"></i> Nạp Đề de_01.tex</button>
-                        <button onclick="window.loadSampleDe09()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-bold shadow-sm hover:bg-indigo-700 flex items-center gap-1.5 transition" title="Nạp nhanh đề mẫu de_09.tex"><i class="fa-solid fa-bolt"></i> Nạp Đề de_09.tex</button>
-                        <button onclick="window.downloadTemplateWord()" class="bg-white text-blue-600 border border-blue-300 px-3 py-2 rounded-lg font-bold shadow-sm hover:bg-blue-50 text-sm"><i class="fa-solid fa-download mr-1"></i>Tải Mẫu</button>
+                        <button onclick="window.loadSampleDe01()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-bold shadow-sm hover:bg-emerald-700 flex items-center gap-1.5 transition cursor-pointer" title="Nạp đề thi chuẩn de_01.tex (23 câu: Trắc nghiệm, Đúng/Sai, Trả lời ngắn, Tự luận)"><i class="fa-solid fa-file-lines"></i> Nạp Đề de_01.tex</button>
+                        <button onclick="window.loadSampleDe09()" class="bg-indigo-600 text-white px-4 py-2 rounded-lg font-bold shadow-sm hover:bg-indigo-700 flex items-center gap-1.5 transition cursor-pointer" title="Nạp nhanh đề mẫu de_09.tex"><i class="fa-solid fa-bolt"></i> Nạp Đề de_09.tex</button>
+                        <button onclick="window.downloadTemplateWord()" class="bg-white text-blue-600 border border-blue-300 px-3 py-2 rounded-lg font-bold shadow-sm hover:bg-blue-50 text-sm cursor-pointer"><i class="fa-solid fa-download mr-1"></i>Tải Mẫu</button>
                         <label class="bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer font-bold shadow-sm hover:bg-blue-700 text-sm flex items-center gap-1.5">
                             <i class="fa-solid fa-upload"></i>Tải File Lên
                             <input type="file" class="hidden" accept=".docx,.doc,.tex,.txt" onchange="window.handleUploadExam(event)">
@@ -366,7 +377,7 @@
                 </div>
                 <div id="questions-preview-container" class="space-y-4 mb-6 max-h-[550px] overflow-y-auto pr-2"></div>
                 <div class="flex justify-end gap-4 mt-6 pt-4 border-t">
-                    <button onclick="window.publishExam()" id="btn-publish" class="bg-emerald-600 text-white px-8 py-3 rounded-lg font-bold shadow hover:bg-emerald-700 hidden">Phát Hành Đề Thi</button>
+                    <button onclick="window.publishExam()" id="btn-publish" class="bg-emerald-600 text-white px-8 py-3 rounded-lg font-bold shadow hover:bg-emerald-700 hidden cursor-pointer">Phát Hành Đề Thi</button>
                 </div>
             </div>
         </div>
@@ -379,8 +390,8 @@
                         <p class="text-gray-500 text-sm">Mã phòng: <span id="sub-exam-pin" class="font-bold text-black"></span></p>
                     </div>
                     <div class="flex gap-3">
-                        <button onclick="window.exportToExcel()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"><i class="fa-solid fa-file-excel mr-2"></i>Xuất Excel</button>
-                        <button onclick="window.navigate('teacher-dashboard')" class="text-gray-500 hover:text-gray-800 px-3"><i class="fa-solid fa-arrow-left mr-1"></i>Quay lại</button>
+                        <button onclick="window.exportToExcel()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 font-bold cursor-pointer"><i class="fa-solid fa-file-excel mr-2"></i>Xuất Excel</button>
+                        <button onclick="window.navigate('teacher-dashboard')" class="text-gray-500 hover:text-gray-800 px-3 font-bold cursor-pointer"><i class="fa-solid fa-arrow-left mr-1"></i>Quay lại</button>
                     </div>
                 </div>
                 <div class="overflow-x-auto">
@@ -392,32 +403,13 @@
             </div>
         </div>
 
-        <div id="view-teacher-student-detail" class="view max-w-5xl mx-auto">
-            <div class="bg-white rounded-xl shadow-xl p-6 mb-6 sticky top-[72px] z-20 border-t-4 border-primary">
-                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-4 border-b pb-4">
-                    <div>
-                        <h2 class="text-2xl font-bold text-primary">Chi Tiết Bài Làm Học Sinh</h2>
-                        <p class="text-gray-600 font-medium text-lg mt-1" id="detail-student-info">Họ tên (Lớp)</p>
-                    </div>
-                    <button onclick="window.navigate('teacher-submissions')" class="text-gray-500 hover:text-gray-800 px-4 py-2 border border-gray-300 rounded shadow-sm hover:bg-gray-50 font-medium"><i class="fa-solid fa-arrow-left mr-2"></i>Quay lại</button>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                    <div class="bg-blue-50 p-3 rounded-lg border border-blue-100"><div class="text-sm text-gray-500 mb-1">Điểm số</div><div class="font-bold text-2xl text-primary" id="detail-score">0/10</div></div>
-                    <div class="bg-green-50 p-3 rounded-lg border border-green-100"><div class="text-sm text-gray-500 mb-1">Số câu đúng</div><div class="font-bold text-2xl text-green-600" id="detail-correct">0</div></div>
-                    <div class="bg-red-50 p-3 rounded-lg border border-red-100"><div class="text-sm text-gray-500 mb-1">Vi phạm gian lận</div><div class="font-bold text-2xl text-red-600" id="detail-strikes">0</div></div>
-                    <div class="bg-gray-50 p-3 rounded-lg border border-gray-200"><div class="text-sm text-gray-500 mb-1">Trạng thái</div><div class="font-bold text-xl mt-1" id="detail-status">Hợp lệ</div></div>
-                </div>
-            </div>
-            <div id="detail-questions-container" class="space-y-6 mb-20"></div>
-        </div>
-
         <div id="view-teacher-classes" class="view max-w-6xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
                 <h2 class="text-3xl font-bold text-white">Quản lý Lớp học</h2>
                 <div class="flex gap-3">
-                    <button onclick="window.downloadClassTemplate()" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-bold hover:bg-blue-50 shadow"><i class="fa-solid fa-download mr-2"></i>Tải Mẫu Excel</button>
+                    <button onclick="window.downloadClassTemplate()" class="bg-white text-blue-600 px-4 py-2 rounded-lg font-bold hover:bg-blue-50 shadow cursor-pointer"><i class="fa-solid fa-download mr-2"></i>Tải Mẫu Excel</button>
                     <label class="bg-emerald-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-emerald-700 shadow cursor-pointer"><i class="fa-solid fa-upload mr-2"></i>Tải lên Danh sách<input type="file" id="upload-class-excel" hidden accept=".xlsx, .xls" onchange="window.importClassExcel(event)"></label>
-                    <button onclick="window.navigate('teacher-dashboard')" class="bg-gray-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-600 shadow"><i class="fa-solid fa-arrow-left mr-2"></i>Về Đề Thi</button>
+                    <button onclick="window.navigate('teacher-dashboard')" class="bg-gray-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-gray-600 shadow cursor-pointer"><i class="fa-solid fa-arrow-left mr-2"></i>Về Đề Thi</button>
                 </div>
             </div>
             <div class="bg-white rounded-xl shadow-xl overflow-hidden">
@@ -432,18 +424,18 @@
             <div class="bg-white rounded-xl shadow-xl overflow-hidden mb-6 mt-10">
                 <div class="bg-blue-900 text-white p-6 flex justify-between items-center">
                     <div><h2 class="text-3xl font-bold mb-1" id="detail-class-name">Tên lớp</h2><div class="text-blue-200">Mã tham gia: <span id="detail-class-code" class="font-mono font-bold text-white bg-blue-800 px-2 py-1 rounded"></span></div></div>
-                    <button onclick="window.navigate('teacher-classes')" class="text-blue-200 hover:text-white border border-blue-400 px-4 py-2 rounded"><i class="fa-solid fa-arrow-left mr-2"></i>Về danh sách</button>
+                    <button onclick="window.navigate('teacher-classes')" class="text-blue-200 hover:text-white border border-blue-400 px-4 py-2 rounded cursor-pointer"><i class="fa-solid fa-arrow-left mr-2"></i>Về danh sách</button>
                 </div>
                 <div class="flex border-b overflow-x-auto">
-                    <button id="tab-btn-students" onclick="window.switchClassTab('students')" class="px-6 py-4 font-bold text-primary border-b-2 border-primary bg-blue-50">Danh sách Học sinh</button>
-                    <button id="tab-btn-lectures" onclick="window.switchClassTab('lectures')" class="px-6 py-4 font-bold text-gray-500 hover:text-primary transition">Tài liệu / Tự luyện</button>
-                    <button id="tab-btn-exams" onclick="window.switchClassTab('exams')" class="px-6 py-4 font-bold text-gray-500 hover:text-primary transition">Đề thi đã giao</button>
+                    <button id="tab-btn-students" onclick="window.switchClassTab('students')" class="px-6 py-4 font-bold text-primary border-b-2 border-primary bg-blue-50 cursor-pointer">Danh sách Học sinh</button>
+                    <button id="tab-btn-lectures" onclick="window.switchClassTab('lectures')" class="px-6 py-4 font-bold text-gray-500 hover:text-primary transition cursor-pointer">Tài liệu / Tự luyện</button>
+                    <button id="tab-btn-exams" onclick="window.switchClassTab('exams')" class="px-6 py-4 font-bold text-gray-500 hover:text-primary transition cursor-pointer">Đề thi đã giao</button>
                 </div>
                 <div class="p-6">
                     <div id="class-tab-students" class="class-tab-content block">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="font-bold text-lg text-gray-800">Danh sách & Mã PIN</h3>
-                            <button onclick="window.exportClassPINs()" class="bg-purple-600 text-white px-4 py-2 rounded font-bold shadow-sm hover:bg-purple-700 transition-colors"><i class="fa-solid fa-file-excel mr-2"></i>Xuất Excel Mã PIN</button>
+                            <button onclick="window.exportClassPINs()" class="bg-purple-600 text-white px-4 py-2 rounded font-bold shadow-sm hover:bg-purple-700 transition-colors cursor-pointer"><i class="fa-solid fa-file-excel mr-2"></i>Xuất Excel Mã PIN</button>
                         </div>
                         <div class="overflow-x-auto border rounded-lg">
                             <table class="w-full text-left border-collapse">
@@ -459,11 +451,11 @@
                         </div>
                     </div>
                     <div id="class-tab-lectures" class="class-tab-content hidden">
-                        <div class="flex justify-between items-center mb-4"><h3 class="font-bold text-lg">Tài liệu & Bài tập</h3><div class="flex gap-2"><button onclick="window.addLectureLink()" class="bg-blue-600 text-white px-4 py-2 rounded font-bold"><i class="fa-solid fa-link mr-2"></i>Thêm Link</button><label class="bg-emerald-600 text-white px-4 py-2 rounded cursor-pointer font-bold"><i class="fa-solid fa-file-word mr-2"></i>Tải Bài Tập<input type="file" class="hidden" accept=".docx,.doc,.tex" onchange="window.handleUploadPractice(event)"></label></div></div>
+                        <div class="flex justify-between items-center mb-4"><h3 class="font-bold text-lg">Tài liệu & Bài tập</h3><div class="flex gap-2"><button onclick="window.addLectureLink()" class="bg-blue-600 text-white px-4 py-2 rounded font-bold cursor-pointer"><i class="fa-solid fa-link mr-2"></i>Thêm Link</button><label class="bg-emerald-600 text-white px-4 py-2 rounded cursor-pointer font-bold"><i class="fa-solid fa-file-word mr-2"></i>Tải Bài Tập<input type="file" class="hidden" accept=".docx,.doc,.tex" onchange="window.handleUploadPractice(event)"></label></div></div>
                         <div id="class-lecture-list" class="space-y-3"></div>
                     </div>
                     <div id="class-tab-exams" class="class-tab-content hidden">
-                        <div class="flex justify-between items-center mb-4"><h3 class="font-bold text-lg">Bài tập & Đề thi</h3><button onclick="window.assignExamToClass()" class="bg-emerald-600 text-white px-4 py-2 rounded shadow font-bold"><i class="fa-solid fa-paper-plane mr-2"></i>Giao đề thi</button></div>
+                        <div class="flex justify-between items-center mb-4"><h3 class="font-bold text-lg">Bài tập & Đề thi</h3><button onclick="window.assignExamToClass()" class="bg-emerald-600 text-white px-4 py-2 rounded shadow font-bold cursor-pointer"><i class="fa-solid fa-paper-plane mr-2"></i>Giao đề thi</button></div>
                         <div id="class-exam-list" class="space-y-3"></div>
                     </div>
                 </div>
@@ -553,12 +545,10 @@
             <div id="practice-preview-questions-container" class="space-y-6 mb-12"></div>
         </div>
 
-
-
         <div id="view-student-class-space" class="view max-w-5xl mx-auto">
              <div class="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-2xl p-6 shadow-xl mb-8 text-white mt-6 flex justify-between items-center">
                 <div><h2 class="text-3xl font-black mb-2" id="space-class-name">Tên Lớp</h2><p class="text-emerald-100 text-lg">Xin chào, <span id="space-student-name" class="font-bold text-white bg-white/20 px-3 py-1 rounded-full">Học Sinh</span></p></div>
-                <button onclick="window.logout()" class="bg-red-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-red-600"><i class="fa-solid fa-right-from-bracket mr-2"></i>Thoát</button>
+                <button onclick="window.logout()" class="bg-red-500 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:bg-red-600 cursor-pointer"><i class="fa-solid fa-right-from-bracket mr-2"></i>Thoát</button>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="md:col-span-2 space-y-6"><div class="bg-white rounded-2xl shadow-lg p-6"><h3 class="text-xl font-bold border-b pb-3 mb-4"><i class="fa-solid fa-pen-to-square text-emerald-500 mr-2"></i> Bài Tập & Đề Thi</h3><div id="space-exam-list" class="space-y-4"></div></div></div>
@@ -569,17 +559,17 @@
         <div id="view-student-practice" class="view max-w-5xl mx-auto mt-6">
             <div class="bg-white shadow-md rounded-xl p-4 mb-6 flex justify-between items-center border-b-4 border-emerald-500">
                 <h2 id="practice-title" class="text-xl font-bold text-emerald-700">Tên Bài</h2>
-                <button onclick="window.navigate('student-class-space')" class="bg-gray-200 text-gray-700 px-4 py-2 rounded font-bold"><i class="fa-solid fa-times mr-1"></i> Đóng</button>
+                <button onclick="window.navigate('student-class-space')" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded font-bold cursor-pointer"><i class="fa-solid fa-times mr-1"></i> Đóng</button>
             </div>
             <div class="bg-white rounded-xl shadow-lg p-6 mb-6 min-h-[300px]" id="practice-container"></div>
             <div class="flex justify-between items-center bg-gray-50 p-4 rounded-xl gap-4 border">
-                <button onclick="window.prevPracticeQuestion()" class="bg-gray-200 text-gray-700 px-6 py-3 rounded-lg font-bold"><i class="fa-solid fa-chevron-left mr-2"></i>Trước</button>
+                <button onclick="window.prevPracticeQuestion()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-lg font-bold cursor-pointer"><i class="fa-solid fa-chevron-left mr-2"></i>Trước</button>
                 <div class="flex gap-2">
-                    <button onclick="window.showPracticeAnswer()" class="bg-orange-500 text-white px-6 py-3 rounded-lg font-bold"><i class="fa-solid fa-eye mr-2"></i>Hiện Đ/A</button>
+                    <button onclick="window.showPracticeAnswer()" class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-bold cursor-pointer"><i class="fa-solid fa-eye mr-2"></i>Hiện Đ/A</button>
                     <span id="practice-progress" class="bg-white px-6 py-3 rounded-lg font-bold border text-gray-600"></span>
-                    <button onclick="window.showPracticeExplanation()" class="bg-emerald-600 text-white px-6 py-3 rounded-lg font-bold"><i class="fa-solid fa-lightbulb mr-2"></i>Lời Giải</button>
+                    <button onclick="window.showPracticeExplanation()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-bold cursor-pointer"><i class="fa-solid fa-lightbulb mr-2"></i>Lời Giải</button>
                 </div>
-                <button onclick="window.nextPracticeQuestion()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold">Tiếp<i class="fa-solid fa-chevron-right ml-2"></i></button>
+                <button onclick="window.nextPracticeQuestion()" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-bold cursor-pointer">Tiếp<i class="fa-solid fa-chevron-right ml-2"></i></button>
             </div>
         </div>
 
@@ -589,12 +579,12 @@
                 <div><h2 id="exam-doing-title" class="text-xl font-bold text-primary">Tên Đề Thi</h2><p id="exam-doing-name" class="text-gray-600 font-medium">Họ tên (Lớp)</p></div>
                 <div class="flex items-center gap-4">
                     <div class="text-center px-4 py-2 bg-red-50 rounded-lg border border-red-200 shadow-inner"><div class="text-xs text-red-500 font-bold uppercase mb-1">Còn lại</div><div id="exam-timer" class="text-3xl font-mono font-black text-red-600">00:00</div></div>
-                    <button onclick="window.submitExamConfirm()" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold shadow-lg text-lg"><i class="fa-solid fa-paper-plane mr-2"></i>Nộp Bài</button>
+                    <button onclick="window.submitExamConfirm()" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold shadow-lg text-lg cursor-pointer"><i class="fa-solid fa-paper-plane mr-2"></i>Nộp Bài</button>
                 </div>
             </div>
             <div id="exam-doing-questions"></div>
             <div class="text-center mt-12 mb-20" id="exam-submit-bottom">
-                 <button onclick="window.submitExamConfirm()" class="bg-blue-600 text-white px-10 py-4 rounded-xl font-black shadow-xl text-xl"><i class="fa-solid fa-flag-checkered mr-2"></i>Nộp Bài Ngay</button>
+                 <button onclick="window.submitExamConfirm()" class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-black shadow-xl text-xl cursor-pointer"><i class="fa-solid fa-flag-checkered mr-2"></i>Nộp Bài Ngay</button>
             </div>
         </div>
 
@@ -611,7 +601,6 @@
                     <div id="result-score" class="text-5xl font-extrabold text-primary mb-2">0/10</div>
                     <div id="result-penalty-msg" class="text-red-500 font-bold mb-4 hidden bg-red-100 p-2 rounded">Bị trừ 50% điểm do nộp quá sớm.</div>
                     
-                    <!-- Bổ sung Ngày giờ nộp bài & Thời gian làm bài của học sinh -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5 text-left bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm text-xs sm:text-sm">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
@@ -644,7 +633,7 @@
                     </div>
                 </div>
                 <div id="result-solution-container" class="mb-4"></div>
-                <button onclick="window.navigate('student-class-space')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg text-lg transition"><i class="fa-solid fa-arrow-left mr-2"></i>Về Lớp Học</button>
+                <button onclick="window.navigate('student-class-space')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg text-lg transition cursor-pointer"><i class="fa-solid fa-arrow-left mr-2"></i>Về Lớp Học</button>
             </div>
         </div>
 
@@ -659,7 +648,7 @@
                     <p id="sol-exam-meta" class="text-xs text-gray-500 font-medium mt-1">Họ tên: ... | Điểm số: ...</p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="window.backFromSolutions()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-xl font-bold transition flex items-center gap-2 shadow-sm text-sm">
+                    <button onclick="window.backFromSolutions()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-xl font-bold transition flex items-center gap-2 shadow-sm text-sm cursor-pointer">
                         <i class="fa-solid fa-arrow-left"></i> Quay Lại
                     </button>
                 </div>
@@ -678,8 +667,8 @@
             <p class="opacity-90">Nếu máy tính bị lag, rớt mạng hoặc mất toàn màn hình do lỗi khách quan, hãy bấm nút bên dưới để gửi báo cáo ngoại lệ thay vì bị khóa bài.</p>
         </div>
         <div class="flex flex-wrap gap-3 justify-center">
-            <button onclick="window.sendExceptionReport()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition"><i class="fa-solid fa-flag mr-1"></i> Báo cáo ngoại lệ (Sự cố mạng/lag)</button>
-            <button onclick="window.resumeExam()" class="bg-white text-blue-900 font-bold px-6 py-3 rounded-xl hover:bg-gray-100 shadow-lg transition">Tôi Đã Hiểu - Tiếp Tục Làm Bài</button>
+            <button onclick="window.sendExceptionReport()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition cursor-pointer"><i class="fa-solid fa-flag mr-1"></i> Báo cáo ngoại lệ (Sự cố mạng/lag)</button>
+            <button onclick="window.resumeExam()" class="bg-white text-blue-900 font-bold px-6 py-3 rounded-xl hover:bg-gray-100 shadow-lg transition cursor-pointer">Tôi Đã Hiểu - Tiếp Tục Làm Bài</button>
         </div>
     </div>
 
@@ -691,7 +680,7 @@
             <p class="mb-3 text-lg"><i class="fa-solid fa-1 mr-2 text-yellow-400"></i> Bấm biểu tượng <b>3 chấm</b> ở góc trên bên phải.</p>
             <p class="text-lg"><i class="fa-solid fa-2 mr-2 text-yellow-400"></i> Chọn <b>"Mở bằng trình duyệt"</b> (Open in Chrome/Safari).</p>
         </div>
-        <button onclick="window.copyCurrentUrl()" class="bg-blue-600 px-8 py-4 rounded-full font-bold shadow-lg hover:bg-blue-700 text-lg border border-blue-400"><i class="fa-solid fa-copy mr-2"></i> Copy Link Ngay</button>
+        <button onclick="window.copyCurrentUrl()" class="bg-blue-600 px-8 py-4 rounded-full font-bold shadow-lg hover:bg-blue-700 text-lg border border-blue-400 cursor-pointer"><i class="fa-solid fa-copy mr-2"></i> Copy Link Ngay</button>
     </div>
 
     <!-- Tự động xác thực ngầm Firebase (Anonymous Auth / System Account) mà không hiển thị giao diện đăng nhập -->

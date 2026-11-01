@@ -1,17 +1,17 @@
 /**
  * Cấu hình Firebase Server và Môi trường ứng dụng MathExam Pro
- * Tự động đồng bộ với backend mới qtest-ac4d3
+ * Tự động đồng bộ với backend mới qtest11-3c48a
  */
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyBmCAWoPosXEguXANoPzy17TkiLw1ve008",
-  authDomain: "qtest-ac4d3.firebaseapp.com",
-  databaseURL: "https://qtest-ac4d3-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "qtest-ac4d3",
-  storageBucket: "qtest-ac4d3.firebasestorage.app",
-  messagingSenderId: "412867160771",
-  appId: "1:412867160771:web:2e9885aa0141fc4cf95076",
-  measurementId: "G-NVTSEKN248"
+  apiKey: "AIzaSyCbG59BO_ALM9zIhqslIcaZH6RuVefm3mo",
+  authDomain: "qtest11-3c48a.firebaseapp.com",
+  databaseURL: "https://qtest11-3c48a-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "qtest11-3c48a",
+  storageBucket: "qtest11-3c48a.firebasestorage.app",
+  messagingSenderId: "1001348645526",
+  appId: "1:1001348645526:web:42d986da12fcc9554cb8b7",
+  measurementId: "G-GKP3YNQE2E"
 };
 
 // Lưu cấu hình vào window để các script khác và HTML dễ dàng truy cập
@@ -88,7 +88,20 @@ export function initFirebase() {
     } else {
       app = window.firebase.app();
     }
-    db = window.firebase.firestore();
+    if (window.firebase.firestore && typeof window.firebase.firestore.setLogLevel === 'function') {
+      try { window.firebase.firestore.setLogLevel('silent'); } catch(_) {}
+    }
+
+    if (typeof window.firebase.firestore === 'function') {
+      try {
+        db = window.firebase.firestore();
+        try {
+          db.settings({ experimentalAutoDetectLongPolling: true, merge: true });
+        } catch (_) {}
+      } catch (fsErr) {
+        db = null;
+      }
+    }
     
     // Khởi tạo Realtime Database nếu có hàm database
     if (typeof window.firebase.database === 'function') {
@@ -110,16 +123,11 @@ export function initFirebase() {
       }
     }
     
-    // Enable offline persistence if available
-    try {
-      db.enablePersistence({ synchronizeTabs: true }).catch(() => {});
-    } catch (_) {}
-
-    isFirebaseConnected = true;
-    console.log('[Firebase] Đã kết nối thành công tới Project:', cfg.projectId);
+    isFirebaseConnected = !!(rtdb || db);
+    console.log('[Firebase] Đã khởi tạo dịch vụ Firebase cho Project:', cfg.projectId);
     updateNetworkStatusUI(navigator.onLine !== false);
   } catch (error) {
-    console.warn('[Firebase] Kết nối Firestore không khả dụng, sử dụng chế độ LocalStorage & Server Sync:', error);
+    console.warn('[Firebase] Kết nối dịch vụ Firebase tùy chọn, sử dụng chế độ LocalStorage & Server Sync:', error);
     isFirebaseConnected = false;
     updateNetworkStatusUI(navigator.onLine !== false);
   }
@@ -142,23 +150,20 @@ export function updateNetworkStatusUI(isOnline) {
   }
 }
 
-// Kiểm tra kết nối THỰC TẾ: navigator.onLine chỉ biết thiết bị còn nối Wi-Fi/LAN hay không,
-// không phát hiện được trường hợp mất Internet (modem rớt mạng, server không truy cập được...).
+// Kiểm tra kết nối THỰC TẾ
 let netProbing = false;
 let netFailCount = 0;
 let netWasOnline = true;
 
 async function probeRealConnectivity() {
   if (typeof navigator !== 'undefined' && navigator.onLine === false) return false;
-  // Chạy từ file:// thì không có máy chủ để kiểm tra, dùng trạng thái của trình duyệt
   if (typeof location === 'undefined' || !/^https?:$/.test(location.protocol)) return true;
 
   const ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
-  const timer = ctrl ? setTimeout(() => ctrl.abort(), 4000) : null;
+  const timer = ctrl ? setTimeout(() => ctrl.abort(), 3000) : null;
   try {
-    // Chỉ cần máy chủ phản hồi (kể cả mã lỗi HTTP) là mạng vẫn thông
-    await fetch(location.origin + '/?_ping=' + Date.now(), {
-      method: 'HEAD',
+    await fetch(location.origin + '/api/ping', {
+      method: 'GET',
       cache: 'no-store',
       signal: ctrl ? ctrl.signal : undefined
     });
@@ -177,7 +182,6 @@ export async function checkRealNetworkStatus() {
     const reachable = await probeRealConnectivity();
     const browserOffline = typeof navigator !== 'undefined' && navigator.onLine === false;
     netFailCount = reachable ? 0 : netFailCount + 1;
-    // Trình duyệt báo offline -> hiển thị ngay; lỗi kết nối thực tế -> xác nhận sau 2 lần liên tiếp để tránh chớp tắt
     const online = !browserOffline && (reachable || netFailCount < 2);
     updateNetworkStatusUI(online);
     if (online && !netWasOnline && typeof window.syncLoadAll === 'function') {
@@ -189,26 +193,22 @@ export async function checkRealNetworkStatus() {
   }
 }
 
-// Lắng nghe sự kiện ngắt mạng (offline) và kết nối lại (online) ngay lập tức
+// Lắng nghe sự kiện ngắt mạng (offline) và kết nối lại (online)
 if (typeof window !== 'undefined') {
   window.addEventListener('online', () => {
-    console.log('[Network] Trình duyệt báo đã có mạng, đang kiểm tra kết nối thực tế...');
     netFailCount = 0;
     checkRealNetworkStatus();
   });
 
   window.addEventListener('offline', () => {
-    console.warn('[Network] Ngắt kết nối mạng (Offline)');
     netWasOnline = false;
     updateNetworkStatusUI(false);
   });
 
-  // Kiểm tra chu kỳ định kỳ kết nối thực tế để cập nhật trạng thái ngay cả khi trình duyệt không phát sự kiện
   setInterval(() => {
     checkRealNetworkStatus();
-  }, 5000);
+  }, 15000);
 
-  // Kiểm tra trạng thái mạng thực tế của trình duyệt lúc tải trang
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       updateNetworkStatusUI(navigator.onLine !== false);
